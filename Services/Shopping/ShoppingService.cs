@@ -1,4 +1,5 @@
-﻿using AllBuyMyself.Models.Shopping;
+﻿using AllBuyMyself.Models.Common.Table;
+using AllBuyMyself.Models.Shopping;
 
 namespace AllBuyMyself.Services.Shopping
 {
@@ -20,6 +21,39 @@ namespace AllBuyMyself.Services.Shopping
         {
             GetProductInfoResp? resp = _context.Products.Where(x => x.Id == id).Select(x => new GetProductInfoResp(x)).FirstOrDefault();
             return resp;
+        }
+
+        public bool AddShoppingCart(AddShoppingCartReq req)
+        {
+            ShoppingCart? shoppingCart = GetShoppingCartItem(req.Username, req.ProductId);
+
+            if (shoppingCart is not null)
+            {
+                shoppingCart.Amount = req.Amount;
+            }
+            else
+            {
+                ShoppingCart newShoppingCart = new()
+                {
+                    Username = req.Username,
+                    ProductId = req.ProductId,
+                    Amount = req.Amount,
+                };
+                _context.ShoppingCarts.Add(newShoppingCart);
+            }
+
+            _context.SaveChanges();
+
+            return true;
+        }
+
+        public ShoppingCart? GetShoppingCartItem(string username, int productId)
+        {
+            ShoppingCart? item = _context.ShoppingCarts
+                .Where(x => x.Username == username && x.ProductId == productId)
+                .FirstOrDefault();
+
+            return item;
         }
     }
 }

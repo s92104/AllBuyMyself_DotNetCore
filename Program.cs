@@ -14,7 +14,8 @@ builder.Services.AddCors(
         policy => {
             policy.WithOrigins("http://localhost:4200")
                 .WithOrigins("http://localhost/")
-                .AllowAnyHeader();
+                .AllowAnyHeader()
+                .AllowAnyMethod();
         }
     )
 );
@@ -26,6 +27,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<AuthenticationService>();
 builder.Services.AddScoped<ShoppingService>();
+builder.Services.AddScoped<OrderService>();
+builder.Services.AddScoped<ShoppingCartService>();
 
 var app = builder.Build();
 

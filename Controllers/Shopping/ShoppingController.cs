@@ -26,5 +26,12 @@ namespace AllBuyMyself.Controllers.Shopping
             GetProductInfoResp? resp = _shoppingService.GetProductInfo(id);
             return new(resp);
         }
+
+        [HttpPost]
+        public ApiResult<bool> AddShoppingCart([FromBody] AddShoppingCartReq req)
+        {
+            bool isSuccess = _shoppingService.AddShoppingCart(req);
+            return new(isSuccess);
+        }
     }
 }

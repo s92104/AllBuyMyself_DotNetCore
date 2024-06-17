@@ -7,6 +7,8 @@ namespace AllBuyMyself
     {
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
+        public DbSet<Order> Orders { get; set; }
 
         public AllBuyMyselfDbContext(DbContextOptions<AllBuyMyselfDbContext> options) : base(options) { }
     }
