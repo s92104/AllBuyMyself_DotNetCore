@@ -11,15 +11,35 @@ namespace AllBuyMyself.Services.Shopping
             _context = context;
         }
 
-        public IEnumerable<GetProductListResp> GetProductList()
+        public IEnumerable<GetProductListResp> GetProductList(string username)
         {
-            List<GetProductListResp> resp = _context.Products.Select(x => new GetProductListResp(x)).ToList();
+            List<Save> saves = _context.Saves
+                .Where(x => x.Username == username)
+                .ToList();
+
+            List<GetProductListResp> resp = _context.Products
+                .Select(x => new GetProductListResp(x))
+                .ToList();
+
+            resp.ForEach(x => x.IsSave = saves.Any(save => save.ProductId == x.Id));
+
             return resp;
         }
 
-        public GetProductInfoResp? GetProductInfo(int id)
+        public GetProductInfoResp? GetProductInfo(int id, string username)
         {
-            GetProductInfoResp? resp = _context.Products.Where(x => x.Id == id).Select(x => new GetProductInfoResp(x)).FirstOrDefault();
+            Save? save = _context.Saves
+                .Where(x => x.Username == username && x.ProductId == id)
+                .FirstOrDefault();
+
+            GetProductInfoResp? resp = _context.Products
+                .Where(x => x.Id == id)
+                .Select(x => new GetProductInfoResp(x)
+                {
+                    IsSave = save != null
+                })
+                .FirstOrDefault();
+
             return resp;
         }
 

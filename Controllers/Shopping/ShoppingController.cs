@@ -14,16 +14,16 @@ namespace AllBuyMyself.Controllers.Shopping
         }
 
         [HttpGet]
-        public ApiResult<IEnumerable<GetProductListResp>> GetProductList()
+        public ApiResult<IEnumerable<GetProductListResp>> GetProductList(string username)
         {
-            IEnumerable<GetProductListResp> resp = _shoppingService.GetProductList();
+            IEnumerable<GetProductListResp> resp = _shoppingService.GetProductList(username);
             return new(resp);
         }
 
         [HttpGet]
-        public ApiResult<GetProductInfoResp?> GetProductInfo(int id)
+        public ApiResult<GetProductInfoResp?> GetProductInfo(int id, string username)
         {
-            GetProductInfoResp? resp = _shoppingService.GetProductInfo(id);
+            GetProductInfoResp? resp = _shoppingService.GetProductInfo(id, username);
             return new(resp);
         }
 

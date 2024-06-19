@@ -9,8 +9,8 @@ namespace AllBuyMyself.Models.Shopping
         public int Price { get; set; } = 0;
         public string? Image_path { get; set; } = string.Empty;
         public string? Description { get; set; } = string.Empty;
+        public bool IsSave { get; set; } = false;
 
-        public GetProductInfoResp() { }
         public GetProductInfoResp(Product product)
         {
             Id = product.Id;
