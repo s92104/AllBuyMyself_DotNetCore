@@ -19,10 +19,13 @@ namespace AllBuyMyself.Services.Authentication
                 return false;
             }
 
-            Account account = new Account
+            Account account = new()
             {
                 Username = req.Username,
                 Password = req.Password,
+                Cellphone = req.Cellphone,
+                Email = req.Email,
+                Address = req.Address,
             };
 
             _context.Accounts.Add(account);
